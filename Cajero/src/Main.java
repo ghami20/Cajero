@@ -6,6 +6,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		Login();
 
+
 	}
 	
 	public static void Login() {
@@ -37,7 +38,7 @@ public class Main {
 				
 				break;
 			case 2: ;
-				//Ingreso del empleado
+				IngresoEmpleado(cajero);
 				break;
 			case 3: 
 				System.out.println("Hasta pronto ~~");
@@ -76,6 +77,34 @@ public class Main {
 		}
 		
 	}
+	
+	//ingresar como empleado
+	public static void IngresoEmpleado(Cajero cajero) {
+		Scanner entrada = new Scanner(System.in);
+		System.out.println("Ingrese tarjeta ");
+		int nrotarjeta =  entrada.nextInt();
+		System.out.println(" Ingrese pin");
+		int nropin =  entrada.nextInt();
+		
+		
+		//Supongamos que este cliente existe en la base de datos, seria un tanto asi 
+		//Esto es una sobrecarga previa 
+		Tarjeta tarjeta = new Tarjeta("12345678","10/25");
+		Empleado empleado = new Empleado("Gamaliel","Quiroz","123456789",1,"CABA");
+
+		
+		if(empleado.Ingreso(nropin, nrotarjeta)) {
+			MenuEmpleado(cajero);
+		}else {
+			System.out.println("No se pudo ingresar");
+			System.out.println("Vuelva a intentar");
+			IngresoEmpleado(cajero);
+		}
+		
+	}
+	
+	
+	
 	//Este menu seria el menu de inicio de el cliente 
 	public static void MenuCliente(Cajero cajero,Cliente cliente,Cuenta cuenta  ) {
 		Scanner entrada = new Scanner(System.in);
@@ -98,9 +127,43 @@ public class Main {
 			
 			break;
 		case 2: ;
-			System.out.println("Ingresar cantidad a retirar");
+			System.out.println("Ingresar cantidad a depositar");
 			dinero = entrada.nextInt();
 			DepositarDinero(cajero,cliente,cuenta,dinero);
+			break;
+		case 3: 
+			imprimirmenu();
+			break;
+			default: System.out.println("Se eligio una opción incorrecta volver a intentar");
+				break;
+		}
+	
+	}
+	
+	
+	//Menu empleado 
+	
+	public static void MenuEmpleado(Cajero cajero) {
+		Scanner entrada = new Scanner(System.in);
+		System.out.println("----------------------------------------------------");
+			System.out.println("Bienvenido");
+			System.out.println("Por favor escoja una de las siguientes opciones");
+			System.out.println("1.Ingresar dinero ");
+			System.out.println("2.Estado de cajero");
+			System.out.println("3.Salir de cajero N° " + cajero.getID());
+		System.out.println("----------------------------------------------------");
+		int dinero;
+		
+		int opcion = entrada.nextInt();
+		switch (opcion) {
+		case 1: 
+			System.out.println("Ingresar dinero");
+			dinero = entrada.nextInt();
+			IngrearDinero(cajero,dinero);
+			
+			break;
+		case 2: ;
+			cajero.verEstado();
 			break;
 		case 3: 
 			imprimirmenu();
@@ -118,7 +181,7 @@ public class Main {
 		System.out.println("----------------------------------------------------");
 			System.out.println("Operación exitosa ! ");
 			System.out.println("Se retiró " + dinero );
-			System.out.println("De la cuenta con numero" + cuenta.getNro_cuenta());
+			System.out.println("De la cuenta con numero " + cuenta.getNro_cuenta());
 			System.out.println("Saldo restante: "+ cuenta.getSaldo());
 		System.out.println("----------------------------------------------------");
 			MenuCliente(cajero,cliente,cuenta);
@@ -128,7 +191,7 @@ public class Main {
 			if(cuenta.getSaldo()<dinero) {
 				System.out.println("no hay dinero suficient en la cuenta");
 			}
-			if(cajero.getDinero() == 0) {
+			if(cajero.getDinero() < dinero) {
 				System.out.println("No hay dinero disponile");
 			}
 			MenuCliente(cajero,cliente,cuenta);
@@ -150,4 +213,22 @@ public class Main {
 			MenuCliente(cajero,cliente,cuenta);
 		}
 	}
+	public static void IngrearDinero(Cajero cajero,int dinero) {
+		
+		if(cajero.IngresarDinero(dinero)) {
+			System.out.println("----------------------------------------------------");
+			System.out.println("Operación exitosa ! ");
+			System.out.println("Se agrego dinero al cajero");
+		System.out.println("----------------------------------------------------");
+		MenuEmpleado(cajero);
+		}else {
+			System.out.println("Error ");
+			MenuEmpleado(cajero);
+		}
+	}
+	
+	
+	
+	
+	
 }

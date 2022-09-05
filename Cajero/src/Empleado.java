@@ -30,5 +30,22 @@ public class Empleado extends Persona {
 	public String toString() {
 		return "Empleado [nro_empleado=" + nro_empleado + ", sector=" + sector + "]";
 	}
+	
+	public boolean Ingreso(int pin, int tarjeta) {
+		
+		//Cliente 1 tiene tarjeta 12345678 y su pin es 1234
+		
+		if(pin == 4321 ) {
+			if(tarjeta == 987654321) {
+				
+				return true; 
+			}else {
+				return false; 
+			}
+		}else {
+			return false;
+		} 
+	}
+	
 
 }

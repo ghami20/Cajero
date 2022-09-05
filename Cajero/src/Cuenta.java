@@ -71,12 +71,15 @@ public class Cuenta {
 	
 	public boolean RetirarDinero(Cajero cajero, int dinero) {
 		
+		//Verifico que tenga plata el cajero y la cuenta 
 		if(cajero.getDinero()>=dinero) {
 			if(this.getSaldo()<dinero) {
 				return false;
 			}else {
+				//retiro dinero de la cuenta 
 				double saldo = this.getSaldo()-dinero;
 				this.setSaldo(saldo);
+				//descuento del cajero el dinero que retire 
 				int aux = cajero.getDinero() - dinero;
 				cajero.setDinero(aux);
 				return true;

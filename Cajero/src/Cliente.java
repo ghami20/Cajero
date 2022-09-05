@@ -31,7 +31,4 @@ public class Cliente extends Persona {
 		return "Cliente [nro_cliente=" + nro_cliente + ", tipo_cliente=" + tipo_cliente + "]";
 	}
 	
-	
-	
-	
 }
